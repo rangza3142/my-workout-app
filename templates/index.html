@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>운동 카운트</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #222;
+            color: #fff;
+            padding: 20px;
+        }
+        .exercise {
+            background: #333;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+        .completed {
+            color: lime;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        button {
+            background: #4dabf7;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        a { color: #4dabf7; }
+    </style>
+</head>
+<body>
+    <h2>오늘의 운동</h2>
+    {% for name, count in data.items() %}
+    <div class="exercise">
+        <form method="POST" action="/add">
+            <strong>{{ name }}</strong>: {{ count }}
+            <input type="hidden" name="exercise" value="{{ name }}">
+            <button type="submit">+1</button>
+        </form>
+    </div>
+    {% endfor %}
+
+    <form method="POST" action="/add_exercise">
+        <input type="text" name="new_exercise" placeholder="운동 이름 추가">
+        <button type="submit">추가</button>
+    </form>
+
+    <form method="POST" action="/reset" style="margin-top: 10px;">
+        <button type="submit">전체 리셋</button>
+    </form>
+
+    <p><a href="/calendar">📅 운동 캘린더 보기</a></p>
+</body>
+</html>
